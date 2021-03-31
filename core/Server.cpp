@@ -1,8 +1,9 @@
 #include "Server.h"
-Server::Server(asio::io_context & io_context,std::map<std::string,RequestHandler*>routings):
-    acceptor_(io_context,asio::ip::tcp::endpoint(asio::ip::tcp::v4(),45088)),
+Server::Server(asio::io_context & io_context, uint32_t port, std::map<std::string,RequestHandler*>routings):
+    acceptor_(io_context,asio::ip::tcp::endpoint(asio::ip::tcp::v4(),port)),
     logger_(true)
 {
+    logger_.push(std::string("Starting server 0.0.0.0:")+std::to_string(port));
         routings_ = routings;
 		asio::socket_base::reuse_address opt(true);
 		acceptor_.set_option(opt);
