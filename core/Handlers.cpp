@@ -1,5 +1,12 @@
 #include "Handlers.h"
-
+std::string ErrorHandler::build_resp(){
+    Response r = Response();
+    r.set_status_code(400);
+    r.set_header("Content-type","text/html");
+    r.set_header("Keep-Alive","Close");
+    r.set_body("Not found requested document");
+    return r.generate();
+}
 void RequestHandler::set_headers(std::map<std::string,std::string> headers){
         headers_ = headers;
         std::smatch m;
@@ -64,4 +71,5 @@ std::string TemplateHandler::handler(){
 				return resp;
             }
     }
+    return std::string();
 }

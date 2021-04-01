@@ -79,8 +79,11 @@ void Server::accept(){
                                     }
                                 }
                             }
-                            if(resp.empty())
-								resp = "HTTP/1.1 404 Not Found\r\nContent-type: text/html\r\nKeep-Alive: Close\r\n\r\n";
+                            if(resp.empty()){
+								//resp = "HTTP/1.1 404 Not Found\r\nContent-type: text/html\r\nKeep-Alive: Close\r\n\r\n";
+                                ErrorHandler eh = ErrorHandler();
+                                resp = eh.build_resp();
+                            }
 						}
 						std::string senddata(resp);
 						s.send(asio::buffer(senddata));

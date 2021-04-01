@@ -6,7 +6,7 @@
 #include <map>
 #include <regex>
 #include <jsoncpp/json/writer.h>
-
+#include "Response.h"
 
 class FileNotFound:std::exception{};
 
@@ -15,10 +15,19 @@ protected:
 	std::map<std::string,std::string> headers_;
     std::map<std::string,std::string> get_params;
 public:
-	RequestHandler(){}
+	RequestHandler(){};
     virtual void set_headers(std::map<std::string,std::string> headers);
     virtual std::string build_resp(){return std::string();};
 	virtual ~RequestHandler(){};
+};
+class ErrorHandler:public RequestHandler{
+protected:
+	std::map<std::string,std::string> headers_;
+    std::map<std::string,std::string> get_params;
+public:
+	ErrorHandler():RequestHandler(){}
+    virtual std::string build_resp();
+	virtual ~ErrorHandler(){};
 };
 class ApiHandler : public RequestHandler{
 private:
