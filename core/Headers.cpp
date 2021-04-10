@@ -1,6 +1,9 @@
 #include "Headers.h"
-Headers::Headers(std::string raw_headers)
-    :raw_headers_(raw_headers){}
+Headers::Headers(std::string raw_headers,std::string client_ip)
+    :raw_headers_(raw_headers)
+{
+    valmap["CLIENT_IP"] = client_ip;
+}
 std::map<std::string,std::string> Headers::get_headers(){
     valmap = by_regex(raw_headers_);
     return valmap;

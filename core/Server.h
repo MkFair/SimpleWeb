@@ -7,6 +7,18 @@
 #include "Logger.h"
 #include "Headers.h"
 
+
+class ClientHandler{
+    asio::ip::tcp::socket s_;
+    std::string buf_;
+    int data_len_;
+    std::map<std::string,RequestHandler*> routings_;
+    public:
+    ClientHandler(asio::ip::tcp::socket,std::map<std::string,RequestHandler*>);
+    virtual ~ClientHandler(){};
+    void handler();
+};
+
 class Server{
 	asio::ip::tcp::acceptor acceptor_;
     std::map<std::string,RequestHandler*> routings_;
